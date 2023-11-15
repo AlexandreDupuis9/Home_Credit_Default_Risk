@@ -13,11 +13,20 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.x' # Choisir votre version de Python
+
+      - name: Install EB CLI
+        run: |
+          pip install awsebcli --upgrade
+
       - name: Configure AWS credentials
         env:
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          AWS_REGION: us-east-1 # Changer la région au besoin
+          AWS_ACCESS_KEY_ID: ${{ secrets.aws.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.aws.AWS_SECRET_ACCESS_KEY }}
+          AWS_REGION: eu-west-3 # Changer la région au besoin
         run: aws configure set aws_access_key_id $AWS_ACCESS_KEY_ID && aws configure set aws_secret_access_key $AWS_SECRET_ACCESS_KEY && aws configure set region $AWS_REGION
 
       - name: Deploy front.py to Elastic Beanstalk
