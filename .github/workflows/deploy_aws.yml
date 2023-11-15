@@ -31,8 +31,8 @@ jobs:
 
       - name: EB Init
         run: |
-          eb init -p python-3.11 Risk-credit-env-2
+          eb init -p python-3.11 e-vn3m4irmqx
 
       - name: Deploy front.py to Elastic Beanstalk
         run: |
-          eb deploy --staged --source front.py Risk-credit-env-2
+          eb deploy --staged --source front.py e-vn3m4irmqx
