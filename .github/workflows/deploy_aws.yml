@@ -29,6 +29,10 @@ jobs:
           AWS_REGION: us-east-1
         run: aws configure set aws_access_key_id $AWS_ACCESS_KEY_ID && aws configure set aws_secret_access_key $AWS_SECRET_ACCESS_KEY && aws configure set region $AWS_REGION
 
+      - name: EB Init
+        run: |
+          eb init -p python-3.11 Risk-credit-env-2
+
       - name: Deploy front.py to Elastic Beanstalk
         run: |
-          eb deploy --staged --source front.py Riskcredit-env
+          eb deploy --staged --source front.py Risk-credit-env-2
