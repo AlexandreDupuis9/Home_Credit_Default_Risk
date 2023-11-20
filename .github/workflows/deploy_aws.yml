@@ -33,4 +33,4 @@ jobs:
             environment_name: Risk-credit-env-2
             version_label: ${{ env.VERSION_LABEL }}
             region: us-east-1
-            deployment_package: front.py
+            deployment_package: app/front.py
