@@ -4,3 +4,5 @@ streamlit
 requests
 matplotlib
 shap
+Flask
+lightgbm
