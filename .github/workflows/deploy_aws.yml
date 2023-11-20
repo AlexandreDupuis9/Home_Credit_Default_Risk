@@ -20,19 +20,20 @@ jobs:
 
       - name: Install EB CLI
         run: |
-          pip install awsebcli --upgrade
+          sudo apt-get update
+          sudo apt-get install python3-pip
+          pip3 install awsebcli --upgrade
 
       - name: Install dependencies
         run: pip install -r app/requirements.txt
 
+      - name: Create ZIP file
+        run: zip -r deployment_package.zip app
+
       - name: Deploy to EB
-        uses: einaregilsson/beanstalk-deploy@v21
+        run: |
+          eb init -p python-3.11 risk-credit --region us-east-1
+          eb deploy --label risk-api-${{ github.run_id }} --staged --timeout 30
         env:
-            VERSION_LABEL: risk-api-${{ github.run_id }}
-        with:
-            aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
-            aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-            application_name: risk-credit
-            environment_name: Risk-credit-env-2
-            version_label: ${{ env.VERSION_LABEL }}
-            region: us-east-1
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
