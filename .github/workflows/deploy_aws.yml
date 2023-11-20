@@ -22,18 +22,15 @@ jobs:
         run: |
           pip install awsebcli --upgrade
 
-      - name: Configure AWS credentials
-        env:
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          AWS_REGION: us-east-1
-        run: aws configure set aws_access_key_id $AWS_ACCESS_KEY_ID && aws configure set aws_secret_access_key $AWS_SECRET_ACCESS_KEY && aws configure set region $AWS_REGION
-
-      - name: EB Init
-        run: |
-          eb init -p python-3.11 risk-credit-env-2
-
-      - name: Deploy front.py to Elastic Beanstalk
-        run: |
-          eb use risk-credit-env-2
-          eb deploy --staged --source front.py --profile aws-elasticbeanstalk-service-role risk-credit-env-2 
+      - name: Deploy to EB
+          uses: einaregilsson/beanstalk-deploy@v21
+          env:
+            VERSION_LABEL: risk-api-${{ github.run_id }}
+          with:
+            aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
+            aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+            application_name: risk-credit
+            environment_name: Risk-credit-env-2
+            version_label: ${{ env.VERSION_LABEL }}
+            region: us-east-1
+            deployment_package: front.py
