@@ -35,4 +35,5 @@ jobs:
 
       - name: Deploy front.py to Elastic Beanstalk
         run: |
+          eb use risk-credit-env-2
           eb deploy --staged --source front.py
