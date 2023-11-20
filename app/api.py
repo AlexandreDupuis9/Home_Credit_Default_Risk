@@ -7,14 +7,14 @@ import shap as shap
 
 app = Flask(__name__)
 
-model = lgb.Booster(model_file='../notebook/model.txt')
+model = lgb.Booster(model_file='./model.txt')
 
 client_data = None
 client_id_list = None
 
 def load_client_data():
     global client_data, client_id_list
-    client_data = pd.read_csv('../ressources/processed_data.csv', nrows=1000)
+    client_data = pd.read_csv('./processed_data.csv', nrows=1000)
     client_id_list = client_data['SK_ID_CURR'].unique()
 
 @app.route('/client_data', methods=['GET'])
