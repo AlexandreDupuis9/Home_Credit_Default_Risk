@@ -17,9 +17,10 @@ jobs:
         run: |
           mkdir -p ~/.ssh
           echo "${{ secrets.EC2_SSH_PRIVATE_KEY }}" > ~/.ssh/ec2.pem
+          ssh-keyscan ec2-34-229-156-26.compute-1.amazonaws.com >> ~/.ssh/known_hosts
           chmod 600 ~/.ssh/ec2.pem
 
       - name: SSH into EC2 and deploy
         run:  |
-          ssh -i ~/.ssh/ec2.pem ubuntu@ec2-34-229-156-26.compute-1.amazonaws.com 'touch ~/test'
+          ssh -i ~/.ssh/ec2.pem -v ubuntu@ec2-34-229-156-26.compute-1.amazonaws.com 'touch ~/test'
           
