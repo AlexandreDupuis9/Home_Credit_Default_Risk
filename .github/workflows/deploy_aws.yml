@@ -1,4 +1,4 @@
-name: Deploy to Elastic Beanstalk
+name: Deploy front.py to /app on EC2
 
 on:
   push:
@@ -13,27 +13,18 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Set up Python
-        uses: actions/setup-python@v2
-        with:
-          python-version: '3.11'
-
-      - name: Install EB CLI
-        run: |
-          sudo apt-get update
-          sudo apt-get install python3-pip
-          pip3 install awsebcli --upgrade
-
-      - name: Install dependencies
-        run: pip install -r app/requirements.txt
-
-      - name: Create ZIP file
-        run: zip -r deployment_package.zip app
-
-      - name: Deploy to EB
-        run: |
-          eb init -p python-3.11 risk-credit --region us-east-1
-          eb deploy --label risk-api-${{ github.run_id }} --staged --timeout 30
+      - name: Transfer front.py to EC2
+        run: scp /app/front.py ec2-user@${{ secrets.EC2_PUBLIC_IP }}:/home/ec2-user
         env:
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          SSH_PRIVATE_KEY: ${{ secrets.PRODUCTION_MYPROJECT_EC2 }}
+
+      - name: SSH into EC2 and deploy
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.EC2_PUBLIC_IP }}
+          username: ec2-user
+          key: ${{ secrets.PRODUCTION_MYPROJECT_EC2 }}
+          port: 22
+          script: |
+            cd /app
+            # Run any additional commands needed after transferring front.py
