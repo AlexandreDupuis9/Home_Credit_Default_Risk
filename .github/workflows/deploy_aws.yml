@@ -23,10 +23,9 @@ jobs:
       - name: Transfer code to EC2
         run: |
           scp -i ~/.ssh/ec2.pem -r app ubuntu@ec2-34-229-156-26.compute-1.amazonaws.com:~
-          scp -i ~/.ssh/ec2.pem -r script ubuntu@ec2-34-229-156-26.compute-1.amazonaws.com:~
 
 
       - name: SSH into EC2 and deploy
         run: |
-          ssh -i ~/.ssh/ec2.pem -v ubuntu@ec2-34-229-156-26.compute-1.amazonaws.com 'cd ~ && ~/script/deploy_script.sh'
+          ssh -i ~/.ssh/ec2.pem -v ubuntu@ec2-34-229-156-26.compute-1.amazonaws.com 'cd ~ && ~/app/deploy_script.sh'
           
