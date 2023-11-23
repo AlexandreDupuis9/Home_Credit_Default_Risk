@@ -1,4 +1,4 @@
-name: Deploy front.py to /app on EC2
+name: Deploy to EC2
 
 on:
   push:
@@ -13,18 +13,14 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Transfer front.py to EC2
-        run: scp /app/front.py ec2-user@${{ secrets.EC2_PUBLIC_IP }}:/home/ec2-user
-        env:
-          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+      - name: Install SSH key
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.EC2_SSH_PRIVATE_KEY }}" > ~/.ssh/ec2.pem
+          chmod 600 ~/.ssh/ec2.pem
+
+      - name: Transfer code to EC2
+        run: scp -i ~/.ssh/ec2.pem -r ./ ubuntu@ec2-34-229-156-26.compute-1.amazonaws.com:/home/ubuntu
 
       - name: SSH into EC2 and deploy
-        uses: appleboy/ssh-action@master
-        with:
-          host: ${{ secrets.EC2_PUBLIC_IP }}
-          username: ec2-user
-          key: ${{ secrets.PRODUCTION_MYPROJECT_EC2 }}
-          port: 22
-          script: |
-            cd /app
-            # Run any additional commands needed after transferring front.py
+        run: ssh -i ~/.ssh/ec2.pem ubuntu@ec2-34-229-156-26.compute-1.amazonaws.com 'cd /home/ubuntu && ./deploy_script.sh'
