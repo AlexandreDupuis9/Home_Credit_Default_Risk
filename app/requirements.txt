@@ -6,4 +6,4 @@ matplotlib
 shap
 Flask
 lightgbm
-libgomp1
+libgomp
