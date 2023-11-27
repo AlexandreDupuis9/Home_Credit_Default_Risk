@@ -4,5 +4,6 @@
 # Installez les dépendances depuis le fichier requirements.txt
 pip3 install -r /home/ubuntu/app/requirements.txt
 
-python3 /home/ubuntu/app/api.py &
-streamlit run /home/ubuntu/app/front.py &
+cd /home/ubuntu/app
+python3 api.py &
+streamlit run front.py &
