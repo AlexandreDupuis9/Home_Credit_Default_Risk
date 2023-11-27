@@ -24,9 +24,9 @@ jobs:
         run: |
           mkdir -p ~/.ssh
           ls -la ~/.ssh
-          echo "${{ secrets.EC2_SSH_PRIVATE_KEY }}" > ~/.ssh/ec2.pem
-          ssh-keyscan ec2-34-229-156-26.compute-1.amazonaws.com >> ~/.ssh/known_hosts
-          chmod 600 ~/.ssh/ec2.pem
+          #echo "${{ secrets.EC2_SSH_PRIVATE_KEY }}" > ~/.ssh/ec2.pem
+          #ssh-keyscan ec2-34-229-156-26.compute-1.amazonaws.com >> ~/.ssh/known_hosts
+          #chmod 600 ~/.ssh/ec2.pem
 
       - name: Transfer code to EC2
         run: |
