@@ -16,6 +16,7 @@ jobs:
       - name: Run API tests
         run: |
           mv app/model.txt .
+          mv app/processed_data.csv .
           pip3 install -r app/requirements.txt
           python -m unittest tests/test_api.py
 
