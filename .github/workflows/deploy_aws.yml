@@ -13,6 +13,13 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
+      - name: Install SSH key
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.EC2_SSH_PRIVATE_KEY }}" > ~/.ssh/ec2.pem
+          ssh-keyscan ec2-34-229-156-26.compute-1.amazonaws.com >> ~/.ssh/known_hosts
+          chmod 600 ~/.ssh/ec2.pem
+
       - name: Run API tests
         run: |
           mv app/model.txt .
@@ -20,12 +27,7 @@ jobs:
           pip3 install -r app/requirements.txt
           python -m unittest tests/test_api.py
 
-      - name: Install SSH key
-        run: |
-          mkdir -p ~/.ssh
-          echo "${{ secrets.EC2_SSH_PRIVATE_KEY }}" > ~/.ssh/ec2.pem
-          ssh-keyscan ec2-34-229-156-26.compute-1.amazonaws.com >> ~/.ssh/known_hosts
-          chmod 600 ~/.ssh/ec2.pem
+
 
       - name: Transfer code to EC2
         run: |
