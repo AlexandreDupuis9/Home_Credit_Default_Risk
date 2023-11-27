@@ -15,9 +15,9 @@ jobs:
 
       - name: Run API tests
         run: |
-          cd app
+          mv app/module.txt .
           pip3 install -r requirements.txt
-          python -m unittest ../tests/test_api.py
+          python -m unittest tests/test_api.py
 
       - name: Install SSH key
         run: |
