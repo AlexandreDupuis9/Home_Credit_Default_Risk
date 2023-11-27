@@ -7,14 +7,14 @@ import shap as shap
 
 app = Flask(__name__)
 
-model = lgb.Booster(model_file='./model.txt')
+model = lgb.Booster(model_file='model.txt')
 
 client_data = None
 client_id_list = None
 
 def load_client_data():
     global client_data, client_id_list
-    client_data = pd.read_csv('./processed_data.csv', nrows=1000)
+    client_data = pd.read_csv('processed_data.csv', nrows=1000)
     client_id_list = client_data['SK_ID_CURR'].unique()
 
 @app.route('/client_data', methods=['GET'])
@@ -40,6 +40,10 @@ def get_list_features():
 @app.route('/predict', methods=['POST'])
 def predict():
 
+    global client_data
+    if client_data is None:
+        load_client_data()
+
     selected_customer = request.json['features']['SK_ID_CURR']
     selected_customer_data = client_data[client_data["SK_ID_CURR"] == selected_customer]
 
@@ -55,15 +59,20 @@ def predict():
 # Nouvelle route pour récupérer le modèle
 @app.route('/get_shap', methods=['POST'])
 def get_shap():
+
+    global client_data
+    if client_data is None:
+        load_client_data()
+
     selected_customer = request.json['features']['SK_ID_CURR']
     selected_customer_data = client_data[client_data["SK_ID_CURR"] == selected_customer]
     explainer = shap.TreeExplainer(model)
     shap_values = compute_shap_values(explainer, selected_customer_data[model.feature_name()])
 
-    # Convert each ndarray to a list
     shap_values_list = [arr.tolist() for arr in shap_values]
 
     return jsonify({'shap_values': shap_values_list})
 
 if __name__ == '__main__':
+    load_client_data()
     app.run(debug=True)

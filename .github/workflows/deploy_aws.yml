@@ -13,6 +13,10 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
+      - name: Run API tests
+        run: |
+          python -m unittest tests/test_api.py
+
       - name: Install SSH key
         run: |
           mkdir -p ~/.ssh
