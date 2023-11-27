@@ -7,7 +7,7 @@ import shap as shap
 
 app = Flask(__name__)
 
-model = lgb.Booster(model_file='model.txt')
+model = lgb.Booster(model_file='./model.txt')
 
 client_data = None
 client_id_list = None
