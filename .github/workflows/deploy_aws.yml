@@ -17,7 +17,7 @@ jobs:
         run: |
           cd app
           pip3 install -r requirements.txt
-          python -m unittest /tests/test_api.py
+          python -m unittest ../tests/test_api.py
 
       - name: Install SSH key
         run: |
