@@ -15,7 +15,7 @@ def load_data():
     # Appeler l'API pour récupérer la liste des identifiants clients
     response = requests.get('http://127.0.0.1:5000/client_data')
     if response.status_code == 200:
-        client_data = response.json(allow_nan=True)['client_data']
+        client_data = response.json()['client_data']
         client_id_list = [entry['SK_ID_CURR'] for entry in client_data]
         client_data = pd.DataFrame(client_data)
     else:
