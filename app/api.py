@@ -18,11 +18,28 @@ model = lgb.Booster(model_file='./model.txt')
 
 client_data = None
 client_id_list = None
+columns_description = None
 
 def load_client_data():
     global client_data, client_id_list
-    client_data = pd.read_csv('processed_data.csv', nrows=1000)
+    client_data = pd.read_csv('processed_data.csv', nrows=5000)
     client_id_list = client_data['SK_ID_CURR'].unique()
+
+def load_columns_description():
+    global columns_description
+    columns_description = pd.read_csv('HomeCredit_columns_description.csv', encoding='ISO-8859-1')
+
+# Route pour obtenir la description d'une colonne
+@app.route('/get_column_description', methods=['GET'])
+def get_column_description():
+    column_name = request.json['column_name']
+
+    # Rechercher la description de la colonne
+    description = columns_description[columns_description['Row'] == column_name]['Description'].values
+    if description.size > 0:
+        return jsonify({'description': description[0]})
+    else:
+        return jsonify({'description': 'Description not found'})
 
 @app.route('/client_data', methods=['GET'])
 def get_client_data():
@@ -44,7 +61,7 @@ def compute_shap_values(explainer, data):
 def get_list_features():
     return jsonify({'list_features': model.feature_name()})
 
-@app.route('/predict', methods=['POST'])
+@app.route('/predict', methods=['GET'])
 def predict():
 
     global client_data
@@ -64,7 +81,7 @@ def predict():
 
 
 # Nouvelle route pour récupérer le modèle
-@app.route('/get_shap', methods=['POST'])
+@app.route('/get_shap', methods=['GET'])
 def get_shap():
 
     global client_data
@@ -82,5 +99,9 @@ def get_shap():
 
 if __name__ == '__main__':
     load_client_data()
-    app.run(debug=True)
+    load_columns_description()
+    app.run(debug=True, port=5000)
+
+#%%
+
 #%%

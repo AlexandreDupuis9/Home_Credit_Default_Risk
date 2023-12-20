@@ -5,4 +5,4 @@ requests
 matplotlib
 shap
 Flask
-lightgbm
+lightgbm==4.1.0
