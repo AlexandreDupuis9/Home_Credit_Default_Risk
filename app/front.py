@@ -9,6 +9,18 @@ client_data = None
 client_id_list = None
 list_features = None
 
+# Réaliser un dashboard pour présenter son travail de modélisation (TODO)
+    # CE1 Vous avez décrit et conçu un parcours utilisateur simple permettant de répondre aux besoins des utilisateurs (les différentes actions et clics sur les différents graphiques permettant de répondre à une question que se pose l'utilisateur).
+    # CE2 Vous avez développé au moins deux graphiques interactifs permettant aux utilisateurs d'explorer les données.
+    # CE3 Vous avez réalisé des graphiques lisibles (taille de texte suffisante, définition lisible).
+    # CE4 Vous avez réalisé des graphiques qui permettent de répondre à la problématique métier.
+    # CE5 Vous avez pris en compte le besoin des personnes en situation de handicap dans la réalisation des graphiques : le candidat doit avoir pris en compte au minimum les critères d'accessibilité du WCAG suivants (https://www.w3.org/Translations/WCAG21-fr/):
+        # Critère de succès 1.1.1 Contenu non textuel
+        # Critère de succès 1.4.1 Utilisation de la couleur
+        # Critère de succès 1.4.3 Contraste (minimum)
+        # Critère de succès 1.4.4 Redimensionnement du texte
+        # Critère de succès 2.4.2 Titre de page
+    # CE6 Vous avez déployé le dashboard sur le web afin qu'il soit accessible pour d'autres utilisateurs sur leurs postes de travail.
 
 def load_data():
     global client_data, client_id_list, list_features

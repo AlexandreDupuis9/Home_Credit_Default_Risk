@@ -6,4 +6,4 @@ pip3 install -r /home/ubuntu/app/requirements.txt
 
 cd /home/ubuntu/app
 python3 api.py &
-streamlit run front.py &
+python3 -m streamlit run front.py &

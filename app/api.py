@@ -5,6 +5,13 @@ import pandas as pd
 import lightgbm as lgb
 import shap as shap
 
+# Déployer un modèle via une API dans le Web (OK)
+# CE1 Vous avez défini et préparé un pipeline de déploiement continu.
+# CE2 Vous avez déployé le modèle de machine learning sous forme d'API (via Flask par exemple) et cette API renvoie bien une prédiction correspondant à une demande.
+# CE3 Vous avez a mis en œuvre un pipeline de déploiement continu, afin de déployer l'API sur un serveur d'une plateforme Cloud.
+# CE4 Vous avez a mis en oeuvre des tests unitaires automatisés (par exemple avec pyTest)
+# CE5 Vous avez a réalisé l'API indépendamment de l'application Dashboard qui utilise le résultat de la prédiction via une requête.
+
 app = Flask(__name__)
 
 model = lgb.Booster(model_file='./model.txt')
@@ -76,3 +83,4 @@ def get_shap():
 if __name__ == '__main__':
     load_client_data()
     app.run(debug=True)
+#%%
