@@ -28,7 +28,7 @@ class TestAPI(unittest.TestCase):
                 'SK_ID_CURR': 100167
             }
         }
-        response = self.app.post('/predict', json=data)
+        response = self.app.get('/predict', json=data)
         self.assertEqual(response.status_code, 200)
         data = json.loads(response.get_data(as_text=True))
         self.assertIn('prediction', data)
@@ -39,7 +39,7 @@ class TestAPI(unittest.TestCase):
                 'SK_ID_CURR': 100167
             }
         }
-        response = self.app.post('/get_shap', json=data)
+        response = self.app.get('/get_shap', json=data)
         self.assertEqual(response.status_code, 200)
         data = json.loads(response.get_data(as_text=True))
         self.assertIn('shap_values', data)

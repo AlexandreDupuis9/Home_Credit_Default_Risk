@@ -11,7 +11,7 @@ client_data = None
 client_id_list = None
 list_features = None
 
-# Réaliser un dashboard pour présenter son travail de modélisation (TODO)
+# Réaliser un dashboard pour présenter son travail de modélisation
     # CE1 Vous avez décrit et conçu un parcours utilisateur simple permettant de répondre aux besoins des utilisateurs (les différentes actions et clics sur les différents graphiques permettant de répondre à une question que se pose l'utilisateur).
     # CE2 Vous avez développé au moins deux graphiques interactifs permettant aux utilisateurs d'explorer les données.
     # CE3 Vous avez réalisé des graphiques lisibles (taille de texte suffisante, définition lisible).

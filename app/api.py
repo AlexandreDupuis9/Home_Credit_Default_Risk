@@ -22,7 +22,7 @@ columns_description = None
 
 def load_client_data():
     global client_data, client_id_list
-    client_data = pd.read_csv('processed_data.csv', nrows=5000)
+    client_data = pd.read_csv('processed_data_light.csv', nrows=5000)
     client_id_list = client_data['SK_ID_CURR'].unique()
 
 def load_columns_description():
