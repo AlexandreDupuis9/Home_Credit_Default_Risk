@@ -25,15 +25,15 @@ jobs:
           mkdir -p ~/.ssh
           ls -la ~/.ssh
           echo "${{ secrets.EC2_SSH_PRIVATE_KEY }}" > ~/.ssh/ec2.pem
-          ssh-keyscan ec2-54-210-33-41.compute-1.amazonaws.com >> ~/.ssh/known_hosts
+          ssh-keyscan ec2-3-87-102-131.compute-1.amazonaws.com >> ~/.ssh/known_hosts
           chmod 600 ~/.ssh/ec2.pem
 
       - name: Transfer code to EC2
         run: |
-          scp -i ~/.ssh/ec2.pem -r app ubuntu@ec2-54-210-33-41.compute-1.amazonaws.com:~
+          scp -i ~/.ssh/ec2.pem -r app ubuntu@ec2-3-87-102-131.compute-1.amazonaws.com:~
 
 
       - name: SSH into EC2 and deploy
         run: |
-          ssh -i ~/.ssh/ec2.pem -v ubuntu@ec2-54-210-33-41.compute-1.amazonaws.com 'cd ~ && ~/app/deploy_script.sh'
+          ssh -i ~/.ssh/ec2.pem -v ubuntu@ec2-3-87-102-131.compute-1.amazonaws.com 'cd ~ && ~/app/deploy_script.sh'
           
